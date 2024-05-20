@@ -1,0 +1,45 @@
+<!-- <form [formGroup]="filterForm">
+  <div>
+    <label for="search">Search:</label>
+    <input id="search" formControlName="search" type="text">
+  </div>
+  <div>
+    <label for="category">Category:</label>
+    <select id="category" formControlName="category">
+      <option value="">All</option>
+      <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+    </select>
+  </div>
+  <div>
+    <label for="maxPrice">Max Price:</label>
+    <input id="maxPrice" formControlName="maxPrice" type="range" [min]="priceRange.min" [max]="priceRange.max" step="50">
+    <span>{{ filterForm.get('maxPrice').value }}</span>
+  </div>
+</form> -->
+
+<div class="filter">
+  <div class="col">
+    <label for="name">
+      <div class="text-xs">Search title:</div>
+      <input type="text" name="name" id="name" placeholder="Name" />
+    </label>
+    <label for="category">
+      <div class="text-xs">Search title:</div>
+      <select name="category" id="category">
+        <option value="All">All</option>
+        <option *ngFor="let category of categories" [value]="category">
+          {{ category }}
+        </option>
+      </select>
+    </label>
+  </div>
+  <div class="col">
+    <label for="price">
+      <div class="text-xs">Price range: {{ priceRange.value }}</div>
+      <input type="range" id="price" />
+    </label>
+    <label for="name">
+      <input type="text" name="name" id="name" placeholder="Name" />
+    </label>
+  </div>
+</div>
