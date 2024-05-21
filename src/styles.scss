@@ -7,19 +7,11 @@
 }
 
 html {
-  color: #404040;
-  font-family: "Roboto", sans-serif;
+  font-family: "Inter", sans-serif;
 }
 
 body {
-  background: #f0f7ff;
-}
-
-.app {
-  padding: 15px 0 40px;
-  width: 100%;
-  max-width: 100%;
-  overflow: hidden;
+  background: rgba(234, 244, 244, 1);
 }
 
 a {
@@ -27,15 +19,6 @@ a {
   text-decoration: none;
 }
 
-.font-arima {
-  font-family: "Arima", cursive;
-  font-weight: 700;
-}
-
-.text-gray {
-  color: #969696;
-}
-
-.text-center {
-  text-align: center;
+ul {
+  list-style: none;
 }

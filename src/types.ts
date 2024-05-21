@@ -46,4 +46,6 @@ export interface Product {
   category: string;
   thumbnail: string;
   images: string[];
+  image: string;
+  stars: boolean[];
 }

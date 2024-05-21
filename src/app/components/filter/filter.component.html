@@ -1,45 +1,61 @@
-<!-- <form [formGroup]="filterForm">
-  <div>
-    <label for="search">Search:</label>
-    <input id="search" formControlName="search" type="text">
-  </div>
-  <div>
-    <label for="category">Category:</label>
-    <select id="category" formControlName="category">
-      <option value="">All</option>
-      <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
-    </select>
-  </div>
-  <div>
-    <label for="maxPrice">Max Price:</label>
-    <input id="maxPrice" formControlName="maxPrice" type="range" [min]="priceRange.min" [max]="priceRange.max" step="50">
-    <span>{{ filterForm.get('maxPrice').value }}</span>
-  </div>
-</form> -->
-
 <div class="filter">
-  <div class="col">
-    <label for="name">
-      <div class="text-xs">Search title:</div>
-      <input type="text" name="name" id="name" placeholder="Name" />
-    </label>
-    <label for="category">
-      <div class="text-xs">Search title:</div>
-      <select name="category" id="category">
-        <option value="All">All</option>
-        <option *ngFor="let category of categories" [value]="category">
-          {{ category }}
-        </option>
-      </select>
-    </label>
-  </div>
-  <div class="col">
-    <label for="price">
-      <div class="text-xs">Price range: {{ priceRange.value }}</div>
-      <input type="range" id="price" />
-    </label>
-    <label for="name">
-      <input type="text" name="name" id="name" placeholder="Name" />
-    </label>
-  </div>
+  <label for="name">
+    <div class="text-xs">Search title:</div>
+    <input
+      type="text"
+      name="name"
+      id="name"
+      placeholder="Name"
+      (input)="onNameChange($event)"
+    />
+  </label>
+  <label for="price">
+    <div class="text-xs">
+      Price range:
+      <span class="font-normal">{{ priceRange.value }}</span>
+    </div>
+    <div class="flex">
+      <span>{{ priceRange.min }}</span>
+      <span>{{ priceRange.max }}</span>
+    </div>
+    <input
+      type="range"
+      id="price"
+      [min]="priceRange.min"
+      [max]="priceRange.max"
+      step="50"
+      value="0"
+      [value]="priceRange.value"
+      (input)="onPriceChange($event)"
+    />
+  </label>
+  <label for="category">
+    <div class="text-xs">Search title:</div>
+    <select name="category" id="category" (change)="onCategoryChange($event)">
+      <option value="All">All</option>
+      <option *ngFor="let category of categories" [value]="category">
+        {{ category }}
+      </option>
+    </select>
+  </label>
+  <label for="rating">
+    <div class="text-xs">
+      Rating range:
+      <span class="font-normal">{{ ratingRange.value }}</span>
+    </div>
+    <div class="flex">
+      <span>{{ ratingRange.min }}</span>
+      <span>{{ ratingRange.max }}</span>
+    </div>
+    <input
+      type="range"
+      id="rating"
+      [min]="ratingRange.min"
+      [max]="ratingRange.max"
+      step="1"
+      value="1"
+      [value]="ratingRange.value"
+      (input)="onRatingChange($event)"
+    />
+  </label>
 </div>

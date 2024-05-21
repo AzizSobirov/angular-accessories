@@ -1,2 +1,12 @@
-<app-filter [priceRange]="priceRange" [categories]="categories"></app-filter>
-<app-products></app-products>
+<div class="app">
+  <app-filter
+    [priceRange]="priceRange"
+    [ratingRange]="ratingRange"
+    [categories]="categories"
+    (priceChange)="onPriceChange($event)"
+    (ratingChange)="onRatingChange($event)"
+    (categoryChange)="onCategoryChange($event)"
+    (nameChange)="onNameChange($event)"
+  ></app-filter>
+  <app-products [products]="filteredProducts"></app-products>
+</div>

@@ -18,22 +18,39 @@ export class AppComponent implements OnInit {
   products: Product[] = [];
   filteredProducts: Product[] = [];
   categories: string[] = [];
-  priceRange = { min: 0, max: 0, value: 0 };
-  ratingRange = { min: 1, max: 5, value: 0 };
+  priceRange = { min: 0, max: 2000, value: 0 };
+  ratingRange = { min: 1, max: 5, value: 1 };
+
+  private selectedCategory = 'All';
+  private searchName = '';
 
   constructor(private productService: ProductService) {}
+
+  getStarsArray(rating: number): boolean[] {
+    const stars = [];
+    for (let i = 0; i < 5; i++) {
+      stars.push(i < Math.round(rating));
+    }
+    return stars;
+  }
 
   fetchProducts() {
     this.productService
       .getProducts('https://dummyjson.com/products?limit=50')
       .subscribe({
         next: (data: Products) => {
+          data.products = data.products.map((product) => {
+            return {
+              ...product,
+              image: product.images[0],
+              stars: this.getStarsArray(product.rating),
+            };
+          });
+
           this.products = data.products;
           this.filteredProducts = data.products;
+
           data.products.forEach((product) => {
-            if (this.priceRange.max < product.price) {
-              this.priceRange.max = product.price;
-            }
             if (!this.categories.includes(product.category)) {
               this.categories.push(product.category);
             }
@@ -45,22 +62,36 @@ export class AppComponent implements OnInit {
       });
   }
 
-  ngOnInit(): void {
-    this.fetchProducts();
-    // this.productService.getProducts().subscribe((products) => {
-    //   this.products = products;
-    //   this.filteredProducts = products;
-    //   this.categories = this.productService.getCategories(products);
-    //   this.priceRange = this.productService.getPriceRange(products);
-    // });
+  filterProducts() {
+    this.filteredProducts = this.productService.filterProducts(this.products, {
+      priceRange: this.priceRange,
+      ratingRange: this.ratingRange,
+      selectedCategory: this.selectedCategory,
+      searchName: this.searchName,
+    });
   }
 
-  // onFilterChange(filters: any): void {
-  // this.filteredProducts = this.productService.filterProducts(
-  //   this.products,
-  //   filters.search,
-  //   filters.category,
-  //   filters.maxPrice
-  // );
-  // }
+  onPriceChange(value: number) {
+    this.priceRange.value = value;
+    this.filterProducts();
+  }
+
+  onRatingChange(value: number) {
+    this.ratingRange.value = value;
+    this.filterProducts();
+  }
+
+  onCategoryChange(value: string) {
+    this.selectedCategory = value;
+    this.filterProducts();
+  }
+
+  onNameChange(value: string) {
+    this.searchName = value;
+    this.filterProducts();
+  }
+
+  ngOnInit(): void {
+    this.fetchProducts();
+  }
 }

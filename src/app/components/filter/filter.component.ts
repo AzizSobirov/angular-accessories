@@ -1,6 +1,5 @@
 import { NgForOf } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-filter',
@@ -9,29 +8,41 @@ import { FormBuilder, FormGroup } from '@angular/forms';
   templateUrl: './filter.component.html',
   styleUrl: './filter.component.scss',
 })
-export class FilterComponent implements OnInit {
+export class FilterComponent {
   @Input() categories: string[] = [];
   @Input() priceRange: { min: number; max: number; value: number } = {
     min: 0,
     max: 0,
     value: 0,
   };
-  // @Output() filterChange = new EventEmitter<any>();
+  @Input() ratingRange: { min: number; max: number; value: number } = {
+    min: 0,
+    max: 0,
+    value: 0,
+  };
 
-  // filterForm: any;
+  @Output() priceChange = new EventEmitter<number>();
+  @Output() ratingChange = new EventEmitter<number>();
+  @Output() categoryChange = new EventEmitter<string>();
+  @Output() nameChange = new EventEmitter<string>();
 
-  // constructor(private fb: FormBuilder) {
-  //   this.filterForm = this.fb.group({
-  //     search: [''],
-  //     category: [''],
-  //     maxPrice: [0],
-  //   });
-  // }
+  onPriceChange(event: Event) {
+    const value = (event.target as HTMLInputElement).value;
+    this.priceChange.emit(Number(value));
+  }
 
-  ngOnInit(): void {
-    //   this.filterForm.get('maxPrice').setValue(this.priceRange.max);
-    //   this.filterForm.valueChanges.subscribe((values: any) => {
-    //     this.filterChange.emit(values);
-    //   });
+  onRatingChange(event: Event) {
+    const value = (event.target as HTMLInputElement).value;
+    this.ratingChange.emit(Number(value));
+  }
+
+  onCategoryChange(event: Event) {
+    const value = (event.target as HTMLSelectElement).value;
+    this.categoryChange.emit(value);
+  }
+
+  onNameChange(event: Event) {
+    const value = (event.target as HTMLInputElement).value;
+    this.nameChange.emit(value);
   }
 }
